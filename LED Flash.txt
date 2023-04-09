@@ -1,0 +1,39 @@
+// Write by
+// by Sina Barbaz Esfahani
+
+// **17.02.2018**
+
+#include <mega32.h>
+#include <delay.h>
+
+void main(void)
+{
+    // Initialize PORTB as output
+    PORTB = 0x00;
+    DDRB = 0xFF;
+
+    while (1)
+    {
+        // Turn on LED1
+        PORTB.0 = 1;
+        delay_ms(100);
+
+        // Turn off LED1 and turn on LED2
+        PORTB.0 = 0;
+        PORTB.1 = 1;
+        delay_ms(100);
+
+        // Turn off LED2 and turn on LED3
+        PORTB.1 = 0;
+        PORTB.2 = 1;
+        delay_ms(100);
+
+        // Turn off LED3 and turn on LED4
+        PORTB.2 = 0;
+        PORTB.3 = 1;
+        delay_ms(100);
+
+        // Turn off LED4
+        PORTB.3 = 0;
+    }
+}

@@ -1,0 +1,27 @@
+#include <mega32.h>
+#include <delay.h>
+
+void main(void)
+{
+    // Initialize ADC and PORTB
+    ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+    ADMUX = (1 << REFS0);
+    DDRB = 0x01;
+
+    while (1)
+    {
+       
+        ADCSRA |= (1 << ADSC);
+
+        // Wait for ADC conversion to finish
+        while (ADCSRA & (1 << ADSC));
+
+        uint16_t adc_val = ADC;
+        float temp = adc_val * 0.48876;  // Convert ADC value to temperature in degrees Celsius
+
+        // Turn on motor if temperature is greater than 25 degrees Celsius, otherwise turn it off
+        PORTB.0 = (temp > 25) ? 1 : 0;
+
+        delay_ms(100);  
+    }
+}
